@@ -21,6 +21,15 @@ def verify_api_key(x_api_key: Optional[str] = Header(None)):
 
 app = FastAPI(title="ViralClip AI API", version="1.7")
 
+_origins = os.getenv("CORS_ORIGINS", "*").split(",")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[o.strip() for o in _origins if o.strip()],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 app.add_middleware(
