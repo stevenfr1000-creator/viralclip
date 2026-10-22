@@ -32,21 +32,7 @@ app.add_middleware(
 
 
 
-app.add_middleware(
 
-_origins = os.getenv("CORS_ORIGINS", "*").split(",")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[o.strip() for o in _origins if o.strip()],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 jobs = {}
 pipeline = VideoPipeline()
