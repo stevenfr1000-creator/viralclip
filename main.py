@@ -382,14 +382,11 @@ def list_jobs(user_id: Optional[str] = "default"):
 
 @app.post("/api/v1/jobs")
 async def create_job(
-
     background_tasks: BackgroundTasks,
     url: Optional[str] = Form(None),
     file: Optional[UploadFile] = File(None),
-    max_clips = max(1, min(int(max_clips or 5), 10))
-    caption_style = caption_style if caption_style in ("bold", "karaoke", "clean", "emoji") else "bold"
-
-
+    max_clips: int = Form(5),
+    caption_style: str = Form("bold"),
     user_id: Optional[str] = Form("default"),
     x_api_key: Optional[str] = Header(None)
 ):
@@ -400,11 +397,10 @@ async def create_job(
         return {"error": "Provide a url or a file"}
     if file and getattr(file, "size", None) and file.size > 500 * 1024 * 1024:
         return {"error": "File too large (max 500 MB)"}
+    max_clips = max(1, min(int(max_clips or 5), 10))
+    caption_style = caption_style if caption_style in ("bold", "karaoke", "clean", "emoji") else "bold"
 
-        if not url and not file:
-            return {"error": "Provide a url or a file"}
-        if file and file.size and file.size > 500 * 1024 * 1024:
-            return {"error": "File too large (max 500 MB)"}
+
 
 
     
