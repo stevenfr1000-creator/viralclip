@@ -129,6 +129,7 @@ function App() {
 
 
 
+  const [customPresets, setCustomPresets] = useState(() => {
     try { return JSON.parse(localStorage.getItem('viralclip_presets') || '[]'); } catch { return []; }
   });
 
@@ -137,8 +138,10 @@ function App() {
     if (!name) return;
     const preset = { name, status: statusFilter, search, sort: sortBy, category: 'jobs' };
     const next = [...customPresets.filter(p => p.name !== name), preset];
-
-    const next = [...customPresets.filter(p => p.name !== name), preset];
+    setCustomPresets(next);
+    localStorage.setItem('viralclip_presets', JSON.stringify(next));
+    logActivity(`Saved preset: ${name}`, 'info');
+  };
     setCustomPresets(next);
     localStorage.setItem('viralclip_presets', JSON.stringify(next));
     logActivity(`Saved preset: ${name}`, 'info');
@@ -153,12 +156,6 @@ function App() {
     logActivity(`Renamed preset: ${oldName} → ${newName}`, 'info');
   };
 
-    if (!confirm(`Delete preset “${name}”?`)) return;
-    const next = customPresets.filter(p => p.name !== name);
-    setCustomPresets(next);
-    localStorage.setItem('viralclip_presets', JSON.stringify(next));
-    logActivity(`Deleted preset: ${name}`, 'info');
-  };
 
 
     try { return JSON.parse(sessionStorage.getItem('viralclip_undo') || 'null'); } catch { return null; }
