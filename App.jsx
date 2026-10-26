@@ -156,8 +156,15 @@ function App() {
     logActivity(`Renamed preset: ${oldName} → ${newName}`, 'info');
   };
 
+  const deletePreset = (name) => {
+    if (!confirm(`Delete preset “${name}”?`)) return;
+    const next = customPresets.filter(p => p.name !== name);
+    setCustomPresets(next);
+    localStorage.setItem('viralclip_presets', JSON.stringify(next));
+    logActivity(`Deleted preset: ${name}`, 'info');
+  };
 
-
+  const [lastJobFilters, setLastJobFilters] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('viralclip_undo') || 'null'); } catch { return null; }
   });
 
