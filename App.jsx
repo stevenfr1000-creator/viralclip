@@ -142,10 +142,7 @@ function App() {
     localStorage.setItem('viralclip_presets', JSON.stringify(next));
     logActivity(`Saved preset: ${name}`, 'info');
   };
-    setCustomPresets(next);
-    localStorage.setItem('viralclip_presets', JSON.stringify(next));
-    logActivity(`Saved preset: ${name}`, 'info');
-  };
+
 
   const renamePreset = (oldName) => {
     const newName = prompt('New name', oldName);
