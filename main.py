@@ -391,8 +391,7 @@ async def create_job(
     x_api_key: Optional[str] = Header(None)
 ):
     verify_api_key(x_api_key)
-    if not _check_rate(user_id or "default"):
-        return {"error": "Rate limit exceeded (10 jobs/hour)"}
+    
     if not url and not file:
         return {"error": "Provide a url or a file"}
     if file and getattr(file, "size", None) and file.size > 500 * 1024 * 1024:
